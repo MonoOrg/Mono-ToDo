@@ -6,7 +6,7 @@ class CreateProjects < ActiveRecord::Migration[6.1]
       t.text          :managers,        array: true,  default: []
       t.text          :executors,       array: true,  default: []
       t.string        :description,     null: false
-      t.text          :tags,            hash: true,   default: {}
+      t.text          :tags,            array: true,   default: {}
       t.timestamps
     end
   end
