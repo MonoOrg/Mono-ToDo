@@ -5,8 +5,8 @@ class CreateTasks < ActiveRecord::Migration[6.1]
       t.string :description, null: true
       t.string :tag, null: false, default: ''
       t.string :type, null: false, default: ''
-      t.belongs_to :user, as: :executor, null: true
-      t.belongs_to :user, as: :author, null: false
+      t.bigint :executor_id, null: false
+      t.bigint :author_id, null: false
       t.timestamps
     end
   end

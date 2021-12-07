@@ -1,5 +1,4 @@
-class Task < ApplicationRecord
-  belongs_to :user, as: :executor
-  belongs_to :user, as: :author
+# frozen_string_literal: true
 
+class Task < ApplicationRecord
 end
