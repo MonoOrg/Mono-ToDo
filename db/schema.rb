@@ -17,7 +17,6 @@ ActiveRecord::Schema.define(version: 2021_12_08_184050) do
 
   create_table "backlogs", force: :cascade do |t|
     t.bigint "project_id", null: false
-    t.text "tasks", array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["project_id"], name: "index_backlogs_on_project_id"
@@ -40,9 +39,10 @@ ActiveRecord::Schema.define(version: 2021_12_08_184050) do
     t.date "date_end", null: false
     t.string "name", null: false
     t.string "description"
-    t.text "tasks", array: true
+    t.bigint "project_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["project_id"], name: "index_sprints_on_project_id"
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -52,8 +52,13 @@ ActiveRecord::Schema.define(version: 2021_12_08_184050) do
     t.string "type", default: "", null: false
     t.bigint "executor_id", null: false
     t.bigint "author_id", null: false
+    t.bigint "sprint_id"
+    t.bigint "backlog_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["backlog_id"], name: "index_tasks_on_backlog_id"
+    t.index ["sprint_id"], name: "index_tasks_on_sprint_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -73,4 +78,7 @@ ActiveRecord::Schema.define(version: 2021_12_08_184050) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "sprints", "projects"
+  add_foreign_key "tasks", "backlogs"
+  add_foreign_key "tasks", "sprints"
 end
